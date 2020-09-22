@@ -1,20 +1,24 @@
 #pragma once
 
-#include <vector>
+#include <boost/asio.hpp>
+#include <functional>
+#include <memory>
 #include <mutex>
 #include <string>
-#include <memory>
-#include <functional>
-
-#include <boost/asio.hpp>
+#include <vector>
 
 /**
  * @brief Possible states of the total station.
  */
-enum class TSState { off, on };
+enum class TSState
+{
+  off,
+  on
+};
 
-class TSInterface {
- public:
+class TSInterface
+{
+public:
   explicit TSInterface(std::function<void(const double, const double, const double)> locationCallback);
 
   /**
@@ -36,7 +40,7 @@ class TSInterface {
    */
   void setPrismPosition(double x, double y, double z);
 
- protected:
+protected:
   /**
    * @brief Starts the timer to detect if no messages are received anymore.
    */
@@ -66,24 +70,25 @@ class TSInterface {
    */
   void turnTelescope(void);
 
-  TSState tsState_;                                       /**< State of the total station */
+  TSState tsState_; /**< State of the total station */
 
-  std::vector<double> prismPosition_;                     /**< Position of the prism given bei Rovio or Vicon */
+  std::vector<double> prismPosition_; /**< Position of the prism given bei Rovio or Vicon */
 
-  std::unique_ptr<boost::asio::io_service> io_context_;   /**< io context object  */
+  std::unique_ptr<boost::asio::io_service> io_context_; /**< io context object  */
 
-  boost::asio::streambuf readData_;                       /**< Streambuffer in which the incomming messages is stored */
+  boost::asio::streambuf readData_; /**< Streambuffer in which the incomming messages is stored */
 
-  bool timerStartedFlag_;                                 /**< Flag indicating if the timer started or not */
-  boost::asio::deadline_timer timer_;                     /**< Deadline timer */
-  bool messagesReceivedFlag_;                             /**< Flag indicating if a message was received */
-  std::mutex messageReceivedMutex_;                       /**< Mutex for the corresponding flag */
+  bool timerStartedFlag_;             /**< Flag indicating if the timer started or not */
+  boost::asio::deadline_timer timer_; /**< Deadline timer */
+  bool messagesReceivedFlag_;         /**< Flag indicating if a message was received */
+  std::mutex messageReceivedMutex_;   /**< Mutex for the corresponding flag */
 
-  bool searchingPrismFlag_;                               /**< Flag indicating that the total station searches the prism */
-  std::mutex searchingPrismMutex_;                        /**< Mutex for the corresponding flag */
+  bool searchingPrismFlag_;        /**< Flag indicating that the total station searches the prism */
+  std::mutex searchingPrismMutex_; /**< Mutex for the corresponding flag */
 
-  bool externalPositionReceivedFlag_;                     /**< Flag indicating if a recent position was received externally */
-  std::mutex externalPositionReceivedMutex_;              /**< Mutex for the corresponding flag */
+  bool externalPositionReceivedFlag_;        /**< Flag indicating if a recent position was received externally */
+  std::mutex externalPositionReceivedMutex_; /**< Mutex for the corresponding flag */
 
-  std::function<void(const double, const double, const double)> locationCallback_; /**< Function pointer for the callback function */
+  std::function<void(const double, const double, const double)> locationCallback_; /**< Function pointer for the
+                                                                                      callback function */
 };

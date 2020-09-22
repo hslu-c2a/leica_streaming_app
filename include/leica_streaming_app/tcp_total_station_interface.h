@@ -7,20 +7,20 @@
 
 #pragma once
 
-#include <vector>
-#include <string>
-#include <memory>
-#include <thread>
-
 #include <boost/asio.hpp>
+#include <memory>
+#include <string>
+#include <thread>
+#include <vector>
 
 #include "total_station_interface.h"
 
 /**
  * @brief TCP interface for the Leica total station
  */
-class TCPTSInterface: public TSInterface {
- public:
+class TCPTSInterface : public TSInterface
+{
+public:
   /**
    * @brief Constructor
    *
@@ -43,7 +43,7 @@ class TCPTSInterface: public TSInterface {
    */
   void connect(std::string ip, int port);
 
- private:
+private:
   /**
    * @brief Starts the tcp reader.
    */
@@ -62,8 +62,7 @@ class TCPTSInterface: public TSInterface {
    * @param ec Error code
    * @param bytes_transferred Amount of bytes received
    */
-  void writeHandler(const boost::system::error_code& ec,
-                    std::size_t bytes_transferred);
+  void writeHandler(const boost::system::error_code& ec, std::size_t bytes_transferred);
 
   /**
    * @brief Callback method when a message was received.
@@ -74,10 +73,9 @@ class TCPTSInterface: public TSInterface {
    * @param ec error code
    * @param bytes_transferred Amount of bytes received
    */
-  void readHandler(const boost::system::error_code& ec,
-                   std::size_t bytes_transferred);
+  void readHandler(const boost::system::error_code& ec, std::size_t bytes_transferred);
 
-  std::unique_ptr<boost::asio::ip::tcp::socket> socket_;  /**< Socket */
+  std::unique_ptr<boost::asio::ip::tcp::socket> socket_; /**< Socket */
 
-  std::thread contextThread_;                             /**< Thread in which the io context object runs */
+  std::thread contextThread_; /**< Thread in which the io context object runs */
 };

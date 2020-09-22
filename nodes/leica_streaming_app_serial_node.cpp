@@ -1,7 +1,8 @@
-#include "ros/ros.h"
 #include "nodelet/loader.h"
+#include "ros/ros.h"
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
   // Getting the IP address
   /*
   std::string ip;

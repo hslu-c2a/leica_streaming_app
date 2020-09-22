@@ -1,22 +1,23 @@
 #pragma once
 
-#include "ros/ros.h"
-#include "nodelet/nodelet.h"
-#include "std_msgs/Bool.h"
 #include "geometry_msgs/TransformStamped.h"
+#include "leica_streaming_app/tcp_total_station_interface.h"
+#include "nav_msgs/Odometry.h"
+#include "nodelet/nodelet.h"
+#include "ros/ros.h"
+#include "std_msgs/Bool.h"
 #include "tf2/LinearMath/Quaternion.h"
 #include "tf2_ros/transform_broadcaster.h"
 
-#include "leica_streaming_app/tcp_total_station_interface.h"
-
-namespace leica_streaming_app {
-
-class LeicaStreamingAppTCPNodelet : public nodelet::Nodelet {
- public:
+namespace leica_streaming_app
+{
+class LeicaStreamingAppTCPNodelet : public nodelet::Nodelet
+{
+public:
   LeicaStreamingAppTCPNodelet();
   ~LeicaStreamingAppTCPNodelet();
 
- private:
+private:
   virtual void onInit();
   void connectCb();
   void disconnectCb();
@@ -35,4 +36,4 @@ class LeicaStreamingAppTCPNodelet : public nodelet::Nodelet {
 
   TCPTSInterface ts_;
 };
-} // namespace leia_streaming_app
+}  // namespace leica_streaming_app

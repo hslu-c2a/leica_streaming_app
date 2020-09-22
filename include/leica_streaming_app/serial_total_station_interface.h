@@ -7,22 +7,22 @@
 
 #pragma once
 
-#include <vector>
-#include <string>
-#include <memory>
-#include <thread>
-#include <mutex>
-
-#include <boost/asio.hpp>
 #include <boost/algorithm/string.hpp>
+#include <boost/asio.hpp>
+#include <memory>
+#include <mutex>
+#include <string>
+#include <thread>
+#include <vector>
 
 #include "total_station_interface.h"
 
 /**
  * @brief TCP interface for the Leica total station
  */
-class SerialTSInterface: public TSInterface {
- public:
+class SerialTSInterface : public TSInterface
+{
+public:
   /**
    * @brief Constructor
    *
@@ -45,7 +45,7 @@ class SerialTSInterface: public TSInterface {
    */
   void connect(std::string comport);
 
- private:
+private:
   /**
    * @brief Starts the tcp reader.
    */
@@ -64,8 +64,7 @@ class SerialTSInterface: public TSInterface {
    * @param ec Error code
    * @param bytes_transferred Amount of bytes received
    */
-  void writeHandler(const boost::system::error_code& ec,
-                    std::size_t bytes_transferred);
+  void writeHandler(const boost::system::error_code& ec, std::size_t bytes_transferred);
 
   /**
    * @brief Callback method when a message was received.
@@ -76,15 +75,14 @@ class SerialTSInterface: public TSInterface {
    * @param ec error code
    * @param bytes_transferred Amount of bytes received
    */
-  void readHandler(const boost::system::error_code& ec,
-                   std::size_t bytes_transferred);
+  void readHandler(const boost::system::error_code& ec, std::size_t bytes_transferred);
 
   /**
    * @brief Starts the prism search on the total station.
    */
   void searchPrism(void);
 
-  boost::asio::serial_port serial_port_;                  /**< Serial port */
+  boost::asio::serial_port serial_port_; /**< Serial port */
 
-  std::thread contextThread_;                             /**< Thread in which the io context object runs */
+  std::thread contextThread_; /**< Thread in which the io context object runs */
 };
