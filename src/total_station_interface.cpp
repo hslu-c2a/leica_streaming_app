@@ -103,7 +103,7 @@ void TSInterface::timerHandler()
   }
 
   // Restart timer
-  timer_.expires_at(timer_.expires_at() + boost::posix_time::milliseconds(800));
+  timer_.expires_at(timer_.expires_at() + boost::posix_time::milliseconds(2000));
   timer_.async_wait(std::bind(&TSInterface::timerHandler, this));
 }
 
